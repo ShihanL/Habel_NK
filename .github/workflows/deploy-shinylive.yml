@@ -28,9 +28,19 @@ jobs:
       with:
         r-version: '4.3.0'
         
-    - name: Install R dependencies
+    - name: Install system dependencies
       run: |
-        install.packages(c("shinylive", "shiny", "shinydashboard", "plotly", "DT", "dplyr", "readr"), repos = "https://cran.r-project.org")
+        sudo apt-get update
+        sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev
+        
+    - name: Install CRAN dependencies
+      run: |
+        install.packages(c("remotes", "shiny", "shinydashboard", "plotly", "DT", "dplyr", "readr"), repos = "https://cran.r-project.org")
+      shell: Rscript {0}
+      
+    - name: Install shinylive from GitHub
+      run: |
+        remotes::install_github("posit-dev/r-shinylive")
       shell: Rscript {0}
       
     - name: Verify package installation
