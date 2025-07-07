@@ -30,8 +30,23 @@ jobs:
         
     - name: Install R dependencies
       run: |
-        install.packages(c("shinylive", "shiny", "shinydashboard", "plotly", "DT", "dplyr", "readr"))
+        install.packages(c("shinylive", "shiny", "shinydashboard", "plotly", "DT", "dplyr", "readr"), repos = "https://cran.r-project.org")
       shell: Rscript {0}
+      
+    - name: Verify package installation
+      run: |
+        Rscript -e "
+        required_packages <- c('shinylive', 'shiny', 'shinydashboard', 'plotly', 'DT', 'dplyr', 'readr')
+        for (pkg in required_packages) {
+          if (!require(pkg, character.only = TRUE)) {
+            cat('ERROR: Package', pkg, 'not installed\\n')
+            quit(status = 1)
+          } else {
+            cat('✓ Package', pkg, 'loaded successfully\\n')
+          }
+        }
+        cat('All packages verified\\n')
+        "
       
     - name: Verify data file exists
       run: |
