@@ -186,27 +186,24 @@ if (is.null(df)) {
       
       # Main content
       fluidRow(
-        # Boxplot - full width when multiple cell types, half width otherwise
+        # Boxplot - left side
         box(
           title = "Gene Expression by Groups", 
           status = "primary", 
           solidHeader = TRUE,
-          width = 12,
+          width = 6,
           
-          plotlyOutput("gene_boxplot", height = "auto")
-        )
-      ),
-      
-      fluidRow(
-        # Scatter plot
+          plotlyOutput("gene_boxplot", height = "600px")
+        ),
+        
+        # Scatter plot - right side
         box(
           title = "Gene Expression Correlation", 
           status = "primary", 
           solidHeader = TRUE,
-          width = 12,
-          height = "650px",
+          width = 6,
           
-          plotlyOutput("gene_scatterplot", height = "550px")
+          plotlyOutput("gene_scatterplot", height = "600px")
         )
       ),
       
@@ -286,7 +283,7 @@ if (is.null(df)) {
               tickfont = list(color = "black")
             ),
             showlegend = FALSE,
-            height = 450,
+            height = 600,
             margin = list(t = 80, b = 80, l = 80, r = 40),
             plot_bgcolor = "white",
             paper_bgcolor = "white"
@@ -325,16 +322,16 @@ if (is.null(df)) {
         }
         
         # Combine plots into subplots
-        plot_height <- max(400, 120 * n_cell_types)
+        plot_height <- max(600, 100 * n_cell_types)
         p <- subplot(plot_list, nrows = n_cell_types, shareY = TRUE, titleY = TRUE) %>%
           layout(
             title = list(
               text = paste("Expression of", selected_gene, "by Cell Type"),
               x = 0.5,
-              font = list(size = 16, color = "black")
+              font = list(size = 14, color = "black")
             ),
             height = plot_height,
-            margin = list(t = 80, b = 80, l = 80, r = 40),
+            margin = list(t = 60, b = 60, l = 60, r = 20),
             plot_bgcolor = "white",
             paper_bgcolor = "white"
           )
@@ -408,8 +405,8 @@ if (is.null(df)) {
             title = list(text = "Cell Type"),
             font = list(color = "black")
           ),
-          height = 550,
-          margin = list(t = 80, b = 80, l = 80, r = 100),
+          height = 600,
+          margin = list(t = 80, b = 80, l = 80, r = 80),
           plot_bgcolor = "white",
           paper_bgcolor = "white"
         )
